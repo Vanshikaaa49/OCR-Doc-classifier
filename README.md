@@ -50,6 +50,12 @@ LIMITATIONS
  2. Only 3 document classes; not tested on a broader label set
  3. No held-out test set separate from validation — accuracy is reported on the validation split used during training
 
+FUTURE IMPROVEMENTS
+
+1. Expand the dataset, particularly for the scientific_publication class, which had the lowest per-class accuracy
+2. Explore synthetic data generation (e.g., TRDG) to supplement real samples
+3. Add a proper train/val/test split as dataset size grows
+
 CONTRIBUTING
 
 Pull requests are welcome. For major changes, open an issue first to discuss what you'd like to change.
