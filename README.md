@@ -5,7 +5,7 @@ OCR Text Extraction Tool
 
 A Python-based OCR (Optical Character Recognition) tool that extracts text from images and scanned documents. It preprocesses images for better accuracy and supports multiple output formats.
 
-Features
+# Features  
 📄 Extract text from images (JPG, PNG, TIFF) and scanned PDFs
 🧹 Image preprocessing — grayscale conversion, noise removal, thresholding
 🌐 Multi-language text recognition
