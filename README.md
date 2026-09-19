@@ -16,7 +16,7 @@ DATASET
 1. 165 labeled document images, loaded from a zipped CSV (image_path, text_label columns)
 2. 3 classes: email, resume, scientific_publication
 3. Split 80/20 train/validation
-   
+
 PIPELINE
 
 1. Image preprocessing — grayscale conversion, resize to 128×32, pixel normalization
