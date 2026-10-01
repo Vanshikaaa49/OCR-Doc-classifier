@@ -1,23 +1,23 @@
 # OCR-Doc-classifier
 A Python-based OCR tool that extracts text from images and scanned documents using [Tesseract/EasyOCR/etc.], with preprocessing for noise reduction and layout detection.
 
-##INTRO
+## INTRO
 
 A custom OCR pipeline built from scratch that reads document category labels (email, resume, scientific_publication) directly from document images, using a CRNN (CNN + Bidirectional LSTM) architecture trained with CTC loss.
 
 This is not a wrapper around Tesseract/EasyOCR — the model, training loop, and decoding logic were built and debugged from the ground up.
 
-RESULT
+## RESULT
 
 81% exact-match accuracy on a held-out validation set, after several rounds of debugging and tuning.
 
-DATASET
+## DATASET
 
 1. 165 labeled document images, loaded from a zipped CSV (image_path, text_label columns)
 2. 3 classes: email, resume, scientific_publication
 3. Split 80/20 train/validation
 
-PIPELINE
+## PIPELINE
 
 1. Image preprocessing — grayscale conversion, resize to 128×32, pixel normalization
 2. Character-level vocabulary — 16 unique characters extracted from the labels, mapped to indices
@@ -28,7 +28,7 @@ PIPELINE
 7. Training — Adam optimizer, EarlyStopping on validation loss, multiple random seeds tried to reduce run-to-run variance
 8. Evaluation — exact-match accuracy on the validation set, decoded using standard CTC greedy decoding (argmax + blank/repeat collapsing)
 
-REAL ISSUES HIT AND FIXED 
+## REAL ISSUES HIT AND FIXED 
 
 1. CTC blank-token misalignment — initially indexed the blank token at position 0, which conflicted with Keras' CTC implementation expecting it last; caused a graph execution error during training
 2. Padding bug — labels were briefly padded with their own first character instead of the blank token, corrupting encoded sequences
@@ -37,25 +37,25 @@ REAL ISSUES HIT AND FIXED
 5. Stale EarlyStopping state across training runs — reusing one EarlyStopping instance across multiple seed-based training loops caused corrupted "best weights" restoration; fixed by instantiating it fresh inside each loop
 6. Shape mismatches after Colab session resets — retraining on wide (256-width) images while testing against original (128-width) validation data silently produced 0% accuracy; required careful variable/shape tracking to resolve
 
-TECH STACK 
+## TECH STACK 
 
 Python 3.x
 TensorFlow / Keras
 OpenCV, NumPy
 Pandas, scikit-learn
 
-LIMITATIONS 
+## LIMITATIONS 
 
  1. Very small dataset (165 images) caps achievable accuracy and makes results somewhat sensitive to random seed
  2. Only 3 document classes; not tested on a broader label set
  3. No held-out test set separate from validation — accuracy is reported on the validation split used during training
 
-FUTURE IMPROVEMENTS
+## FUTURE IMPROVEMENTS
 
 1. Expand the dataset, particularly for the scientific_publication class, which had the lowest per-class accuracy
 2. Explore synthetic data generation (e.g., TRDG) to supplement real samples
 3. Add a proper train/val/test split as dataset size grows
 
-CONTRIBUTING
+## CONTRIBUTING
 
 Pull requests are welcome. For major changes, open an issue first to discuss what you'd like to change.
